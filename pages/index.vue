@@ -3,7 +3,16 @@
     <div class="container">
       <div class="title border-bottom">
         <h5>Task</h5>
-        <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center">
+          <input v-model="searchQuery" type="text" class="form-control" placeholder="Search">
+      <div class="d-flex align-items-center justify-content-end w-100">
+      <select v-model="searchCategory" class="form-select" aria-label="Default select example">
+        <option disabled value="">Open this select menu</option>
+        <option value="">Semua</option>
+        <option >Terbaru</option>
+        <option >Terlaris</option>
+        <option >Terenak</option>
+</select>
         <span class="me-2">View As</span>
         <button
         class="btn btn-outline-secondary py-1 px-3"
@@ -13,61 +22,19 @@
         </button>
       </div>
       </div>
+    </div>
+      <!-- <div class="list-task row">
+        <CardItem :task="tasks[0]" :isGrid="isGrid" />
+        <CardItem :task="tasks[1]" :isGrid="isGrid" />
+        <CardItem :task="tasks[2]" :isGrid="isGrid" />
+      </div> -->
       <div class="list-task row">
-        <div
-        :class="['item-task d-flex align-items-center border-bottom pt-3 pb-4',
-              isGrid ? 'col-12 col-md-6 col-lg-4' : 'col-12']">
-          <input
-          id="task"
-          v-model="task[1].isDone"
-          type="checkbox"
-          name="status"
-          class="me-2"
-          :checked="task[1].isDone">
-          <div
-          :class="['d-flex flex-column', task[1].isDone ?
-          'text-decoration-line-through fst-italic': '' ]"
-          >
-              <div class="title-task mb1">{{ task[1].title}}</div>
-              <div class="description-task small text-muted">{{ task[1].description}}</div>
-          </div>
-        </div>
-        <div
-        :class="['item-task d-flex align-items-center border-bottom pt-3 pb-4',
-              isGrid ? 'col-12 col-md-6 col-lg-4' : 'col-12']">
-          <input
-          id="task"
-          v-model="task[2].isDone"
-          type="checkbox"
-          name="status"
-          class="me-2"
-          :checked="task[2].isDone">
-          <div
-          :class="['d-flex flex-column', task[2].isDone ?
-          'text-decoration-line-through fst-italic': '' ]"
-          >
-              <div class="title-task mb1">{{ task[2].title}}</div>
-              <div class="description-task small text-muted">{{ task[0].description}}</div>
-          </div>
-        </div>
-        <div
-        :class="['item-task d-flex align-items-center border-bottom pt-3 pb-4',
-              isGrid ? 'col-12 col-md-6 col-lg-4' : 'col-12']">
-          <input
-          id="task"
-          v-model="task[0].isDone"
-          type="checkbox"
-          name="status"
-          class="me-2"
-          :checked="task[0].isDone">
-          <div
-          :class="['d-flex flex-column', task[0].isDone ?
-          'text-decoration-line-through fst-italic': '' ]"
-          >
-              <div class="title-task mb1">{{ task[0].title}}</div>
-              <div class="description-task small text-muted">{{ task[0].description}}</div>
-          </div>
-        </div>
+        <CardItem
+          v-for="(task, i) in SearchResult"
+          :key="i"
+          :task="task"
+          :is-grid="isGrid"
+          />
       </div>
       <div class="action py-2">
         <a v-if="!isCreating" href="#" class="add-button" @click="isCreating = !isCreating">Add Task</a>
@@ -89,31 +56,80 @@
   </div>
 </template>
 <script>
+import CardItem from "@/components/Card/CardItem.vue"
   export default {
+    components:{
+      CardItem
+    },
     data(){
       return{
-        // status sebelum menambhakn task
-        isGrid: false,
-        isCreating: false,
+        // variabel penampung teks pencarian
+        searchQuery:'',
+        searchCategory:'',
         // daftar task
-        task: [
+        isGrid: false,
+        // status sebelum menambhakn task
+        isCreating: false,
+        tasks: [
           {
             title: 'Task 1',
-            description: 'Deskripsi Task 1',
+            description: 'Ini makanan terenak',
             isDone: false,
+            category: 'Terenak',
           },
           {
             title: 'Task 2',
-            description: 'ini deskripsi 2',
+            description: 'ini resep makanan terbaru',
             isDone: false,
+            category: 'Terbaru',
             },
             {
             title: 'Task 3',
-            description: ' ini deskripsi 3',
+            description: ' ini makanan terlaris',
             isDone: false,
+            category: 'Terlaris',
             }
         ]
       }
+    },
+    computed: {
+      SearchResult(){
+        if(!this.searchCategory){
+          return this.resultQuery(this.tasks)
+        }
+        if(!this.resultQuery){
+          return this.resultCategory(this.tasks)
+        }
+        return this.resultCategory(this.resultQuery(this.tasks))
+    }
+    },
+    methods: {
+       resultQuery(tasks){
+        if(this.searchQuery){
+          return tasks.filter((item) => {
+            return this.searchQuery
+            .toLowerCase()
+            .split(" ")
+            .every((v) => item.title.toLocaleLowerCase().includes(v));
+          });
+        }else{
+          console.log(this.tasks)
+          return this.tasks
+        }
+      },
+      resultCategory(tasks){
+        if(this.searchCategory){
+          return tasks.filter((item) => {
+            return this.searchCategory
+            .toLowerCase()
+            .split(" ")
+            .every((v) => item.category.toLocaleLowerCase().includes(v));
+          });
+        }else{
+          console.log(this.tasks)
+          return this.tasks
+        }
+      },
     }
   }
 
