@@ -7,7 +7,7 @@
           <input v-model="searchQuery" type="text" class="form-control" placeholder="Search">
       <div class="d-flex align-items-center justify-content-end w-100">
       <select v-model="searchCategory" class="form-select" aria-label="Default select example">
-        <option disabled value="">Open this select menu</option>
+        <option disabled value="">Pilih category</option>
         <option value="">Semua</option>
         <option >Terbaru</option>
         <option >Terlaris</option>
@@ -88,7 +88,7 @@ import CardItem from "@/components/Card/CardItem.vue"
             description: ' ini makanan terlaris',
             isDone: false,
             category: 'Terlaris',
-            }
+          }
         ]
       }
     },
