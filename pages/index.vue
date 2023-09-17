@@ -36,7 +36,7 @@
           :is-grid="isGrid"
           />
       </div>
-      <form v-on:submit.prevent="appendArray">
+      <form v-on:submit.prevent="appendArray" ref="form">
       <div class="action py-2">
         <a v-if="!isCreating" href="#" class="add-button" @click="isCreating = !isCreating">Add Task</a>
         <div v-else class="add-card" >
@@ -90,7 +90,6 @@ import CardItem from "@/components/Card/CardItem.vue"
         // status sebelum menambhakn task
         isCreating: false,
         tasks: [
-
           // {
           //   title: 'Task 1',
           //   description: 'Ini makanan terenak',
@@ -154,8 +153,11 @@ import CardItem from "@/components/Card/CardItem.vue"
         this.tasks.push({
           title:this.tasks.title,
           description:this.tasks.description,
-          category:this.tasks.category
+          category:this.tasks.category,
         })
+        this.tasks.title = ''
+        this.tasks.description = ''
+        this.tasks.category = ''
     }
     }
   }
