@@ -12,7 +12,7 @@
         <option >Terbaru</option>
         <option >Terlaris</option>
         <option >Terenak</option>
-</select>
+      </select>
         <span class="me-2">View As</span>
         <button
         class="btn btn-outline-secondary py-1 px-3"
@@ -36,14 +36,23 @@
           :is-grid="isGrid"
           />
       </div>
+      <form v-on:submit.prevent="appendArray">
       <div class="action py-2">
         <a v-if="!isCreating" href="#" class="add-button" @click="isCreating = !isCreating">Add Task</a>
         <div v-else class="add-card" >
           <div class="card mb-2">
             <div class="card-body d-flex flex-column p-0">
-              <input type="text" class="form-control border-0 mb-2" placeholder="Title">
-              <textarea id="" class="form-control border-0 small" name="" cols="30" rows="10" placeholder="Description">
+              <input v-model="tasks.title" type="text" class="form-control border-1 mb-2" placeholder="Title" required>
+              <textarea v-model="tasks.description" class="form-control border-1 small" name="" cols="30" rows="10" placeholder="Description" required>
               </textarea>
+              <br>
+              <label for="category">Kategori : </label>
+              <select v-model="tasks.category" id="category" class="form-select" aria-label="Default select example" required>
+                  <option disabled>Pilih category</option>
+                  <option>Terbaru</option>
+                  <option>Terlaris</option>
+                  <option>Terenak</option>
+              </select>
             </div>
           </div>
           <div class="button-wrapper d-flex">
@@ -52,8 +61,18 @@
           </div>
         </div>
       </div>
+      </form>
     </div>
+    <section class="content">
+      <br>
+      <ul v-if="tasks.name !== ''">
+        <li v-for="(item, k) in tasks" :key="k">
+          <strong>{{ k }}:</strong> {{ item }}
+        </li>
+      </ul>
+    </section>
   </div>
+
 </template>
 <script>
 import CardItem from "@/components/Card/CardItem.vue"
@@ -71,25 +90,26 @@ import CardItem from "@/components/Card/CardItem.vue"
         // status sebelum menambhakn task
         isCreating: false,
         tasks: [
-          {
-            title: 'Task 1',
-            description: 'Ini makanan terenak',
-            isDone: false,
-            category: 'Terenak',
-          },
-          {
-            title: 'Task 2',
-            description: 'ini resep makanan terbaru',
-            isDone: false,
-            category: 'Terbaru',
-            },
-            {
-            title: 'Task 3',
-            description: ' ini makanan terlaris',
-            isDone: false,
-            category: 'Terlaris',
-          }
-        ]
+
+          // {
+          //   title: 'Task 1',
+          //   description: 'Ini makanan terenak',
+          //   isDone: false,
+          //   category: 'Terenak',
+          // },
+          // {
+          //   title: 'Task 2',
+          //   description: 'ini resep makanan terbaru',
+          //   isDone: false,
+          //   category: 'Terbaru',
+          //   },
+          //   {
+          //   title: 'Task 3',
+          //   description: ' ini makanan terlaris',
+          //   isDone: false,
+          //   category: 'Terlaris',
+          // }
+        ],
       }
     },
     computed: {
@@ -130,6 +150,13 @@ import CardItem from "@/components/Card/CardItem.vue"
           return this.tasks
         }
       },
+      appendArray(){
+        this.tasks.push({
+          title:this.tasks.title,
+          description:this.tasks.description,
+          category:this.tasks.category
+        })
+    }
     }
   }
 
