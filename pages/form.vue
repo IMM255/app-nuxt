@@ -30,14 +30,14 @@
           </div>
           <label class="label">Select Multiple</label>
           <div class="control">
-            <select multiple v-model="form.usecases">
+            <select v-model="form.usecases" multiple>
               <option>Debugging Code</option>
               <option>Fixing Error</option>
               <option>User Support</option>
             </select>
           </div>
           <label class="checkbox">
-            <input type="checkbox" v-model="form.terms">
+            <input v-model="form.terms" type="checkbox">
             I agree to the <a href="#">terms and condition</a>
           </label>
         </div>

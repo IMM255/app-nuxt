@@ -1,24 +1,31 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container">
-    <a class="navbar-brand" href="#">Taskist</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+    <a class="navbar-brand" href="#">TaskList</a>
+    <button
+class="navbar-toggler" type="button" data-bs-toggle="collapse"
     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div id="navbarSupportedContent" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <nuxt-link class="nav-link active" aria-current="page" to="/">Home</nuxt-link>
           <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/latihan">Latihan</a>
+          <nuxt-link class="nav-link active" aria-current="page" to="/latihan">Latihan</nuxt-link>
           </li>
           <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/lifecycle">Lifecycle</a>
+          <nuxt-link class="nav-link active" aria-current="page" to="/lifecycle">Lifecycle</nuxt-link>
           </li>
           <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/form">Form</a>
+          <nuxt-link class="nav-link active" aria-current="page" to="/form">Form</nuxt-link>
+          </li>
+          <li class="nav-item">
+          <nuxt-link class="nav-link active" aria-current="page" to="/list">List</nuxt-link>
+          </li>
+          <li class="nav-item">
+          <nuxt-link class="nav-link active" aria-current="page" to="/app/article">Article</nuxt-link>
           </li>
         </ul>
     </div>
